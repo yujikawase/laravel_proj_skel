@@ -11,7 +11,33 @@
 |
 */
 
-Route::get('/', function()
+
+
+
+Route::group(array('before' => array('auth')),function(){
+	if(Auth::check()){
+		switch(Auth::user()->group_id){
+			case 0:
+				Route::get('/top', function()
+				{
+					return View::make('top.group0');
+				});
+				break;
+			case 1:
+				Route::get('/top', function()
+				{
+					return View::make('top.group1');
+				});
+				break;
+		}
+	} 
+});
+
+
+
+Route::controller('users','UserController');
+
+Route::get('/',function()
 {
-	return View::make('hello');
+	return Redirect::to('/users/login');
 });

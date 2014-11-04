@@ -43,7 +43,25 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			return Redirect::guest('users/login');
+		}
+	}
+});
+
+Route::filter('group0', function()
+{
+	if(Auth::check()){
+		if(Auth::user()->group_id != 0){
+			return Redirect::guest('users/login');
+		}
+	}
+});
+
+Route::filter('group1', function()
+{
+	if(Auth::check()){
+		if(Auth::user()->group_id != 1){
+			return Redirect::guest('users/login');
 		}
 	}
 });
